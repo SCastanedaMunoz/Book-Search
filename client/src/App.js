@@ -23,8 +23,28 @@ function App() {
     });
   };
 
-  const onSaveBook = () => {
+  const onSaveBook = (id) => {
+    const targetBook = books.find((book) => book.id === id);
 
+    const volumeInfo = targetBook.volumeInfo;
+
+    const title = volumeInfo.title;
+    const subtitle = volumeInfo.title;
+    const authors = volumeInfo.title;
+    const description = volumeInfo.title;
+    const image = volumeInfo.imageLinks
+      ? volumeInfo.imageLinks.thumbnail
+      : "https://via.placeholder.com/128x197?text=Image+Not+Found";
+    const link = volumeInfo.previewLink;
+
+    API.saveBook({
+      title: title,
+      subtitle: subtitle,
+      authors: authors,
+      description: description,
+      image: image,
+      link: link
+    })
   };
 
   return (
@@ -33,7 +53,12 @@ function App() {
       <Switch>
         <Route exact path={["/", "/books"]}>
           <Header />
-          <Books searchRef={searchInput} onSearch={onSearch} books={books} />
+          <Books
+            searchRef={searchInput}
+            onSearch={onSearch}
+            onSave={onSaveBook}
+            books={books}
+          />
         </Route>
         <Route exact path="/saved">
           <Header />

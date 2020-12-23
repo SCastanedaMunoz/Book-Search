@@ -4,7 +4,7 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import BookCard from "../components/BookCard";
+import BookCard from "../components/ResultCard";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Books({ searchRef, onSearch, books }) {
+function Books({ searchRef, onSearch, onSave, books }) {
   const classes = useStyles();
   const searchBar = () => {
     return (
@@ -112,7 +112,6 @@ function Books({ searchRef, onSearch, books }) {
           />
         </div>
         <Grid container justify="flex-end">
-          ``
           <Button
             onClick={onSearch}
             justify="space-between"
@@ -130,7 +129,6 @@ function Books({ searchRef, onSearch, books }) {
   const resultBox = () => {
     const hasResults = books.length > 0;
     const selection = hasResults ? renderResults() : renderNoResults();
-
     return (
       <Paper className={classes.paper}>
         <Typography className={classes.header} variant="h6">
@@ -156,12 +154,12 @@ function Books({ searchRef, onSearch, books }) {
       <Paper className={classes.resultPaperFilled}>
         {books.map((book) => {
           const volumeInfo = book.volumeInfo;
-          console.log(volumeInfo);
           const image = volumeInfo.imageLinks
             ? volumeInfo.imageLinks.thumbnail
             : "https://via.placeholder.com/128x197?text=Image+Not+Found";
           return (
             <BookCard
+              id={book.id}
               key={book.id}
               title={volumeInfo.title}
               subtitle={volumeInfo.subtitle}
@@ -169,6 +167,7 @@ function Books({ searchRef, onSearch, books }) {
               description={volumeInfo.description}
               thumbnail={image}
               link={volumeInfo.previewLink}
+              onAction={onSave}
             ></BookCard>
           );
         })}

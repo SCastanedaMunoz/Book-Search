@@ -35,12 +35,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResultCard({
+  id,
   title,
   subtitle,
   authors,
   description,
   thumbnail,
   link,
+  onAction,
 }) {
   const classes = useStyles();
 
@@ -102,7 +104,11 @@ function ResultCard({
           >
             View
           </Button>
-          <Button className={classes.button} variant="contained">
+          <Button
+            onClick={() => onAction(id)}
+            className={classes.button}
+            variant="contained"
+          >
             Save
           </Button>
         </Grid>
