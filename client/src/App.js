@@ -1,24 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Nav from "./components/Nav";
+import Header from "./components/Header";
+import Books from "./pages/Books";
+import Saved from "./pages/Saved";
+import NoMatch from "./pages/NoMatch";
+import API from "./util/API";
+
+import { useState, useRef } from "react";
 
 function App() {
+  const searchInput = useRef(null);
+  const [lastSearch, setLastSearch] = useState("");
+  const [books, setBooks] = useState([]);
+  const [savedBooks, setSavedBooks] = useState([]);
+
+  const onSearch = () => {
+    const newSearch = searchInput.current.value;
+    setLastSearch(newSearch);
+    API.getBooks(newSearch).then(({ data }) => {
+      console.log(data);
+      setBooks(data.items);
+    });
+  };
+
+  const onSaveBook = () => {
+
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav />
+      <Switch>
+        <Route exact path={["/", "/books"]}>
+          <Header />
+          <Books searchRef={searchInput} onSearch={onSearch} books={books} />
+        </Route>
+        <Route exact path="/saved">
+          <Header />
+          <Saved />
+        </Route>
+        <Route>
+          <NoMatch />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
