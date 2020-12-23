@@ -4,7 +4,7 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import ResultCard from "../components/ResultCard";
+import BookCard from "../components/BookCard";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -161,7 +161,7 @@ function Books({ searchRef, onSearch, books }) {
             ? volumeInfo.imageLinks.thumbnail
             : "https://via.placeholder.com/128x197?text=Image+Not+Found";
           return (
-            <ResultCard
+            <BookCard
               key={book.id}
               title={volumeInfo.title}
               subtitle={volumeInfo.subtitle}
@@ -169,7 +169,7 @@ function Books({ searchRef, onSearch, books }) {
               description={volumeInfo.description}
               thumbnail={image}
               link={volumeInfo.previewLink}
-            ></ResultCard>
+            ></BookCard>
           );
         })}
       </Paper>
