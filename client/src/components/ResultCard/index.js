@@ -65,7 +65,7 @@ const getAuthor = (author, classes) => {
   );
 };
 
-function ResultCard(title, subtitle, authors, description, thumbnail) {
+function ResultCard(title, subtitle, authors, description, thumbnail, link) {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
@@ -84,7 +84,7 @@ function ResultCard(title, subtitle, authors, description, thumbnail) {
           alignItems="baseline"
         >
           <Button
-            href={volumeInfo.previewLink}
+            href={link}
             target="_blank"
             className={classes.button}
             variant="contained"
