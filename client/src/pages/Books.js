@@ -24,14 +24,14 @@ const useStyles = makeStyles((theme) => ({
   resultPaper: {
     padding: "1em",
     backgroundColor: "#5e5e5e",
-    },
-    resultPaperFilled: {
-        paddingLeft: "1em",
-        paddingRight: "1em",
-        paddingTop: ".5em",
-        paddingBottom: ".5em",
-        backgroundColor: "#5e5e5e",
-      },
+  },
+  resultPaperFilled: {
+    paddingLeft: "1em",
+    paddingRight: "1em",
+    paddingTop: ".5em",
+    paddingBottom: ".5em",
+    backgroundColor: "#5e5e5e",
+  },
   header: {
     fontWeight: "bold",
     color: "white",
@@ -156,7 +156,21 @@ function Books({ searchRef, onSearch, books }) {
     return (
       <Paper className={classes.resultPaperFilled}>
         {books.map((book) => {
-            return <ResultCard key={book.id} book={book}></ResultCard>;
+          const volumeInfo = book.volumeInfo;
+          const image = volumeInfo.imageLinks
+            ? volumeInfo.imageLinks.thumbnail
+            : "https://via.placeholder.com/128x197?text=Image+Not+Found";
+          return (
+            <ResultCard
+              key={book.id}
+              title={volumeInfo.title}
+              subtitle={volumeInfo.subtitle}
+              authors={volumeInfo.authors}
+              description={volumeInfo.description}
+              thumbnail={image}
+              link={volumeInfo.previewLink}
+            ></ResultCard>
+          );
         })}
       </Paper>
     );

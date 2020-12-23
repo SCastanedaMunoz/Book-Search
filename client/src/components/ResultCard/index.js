@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "0.25em",
     fontStyle: "italic",
     margin: 0,
+    fontWeight: "bold",
   },
   button: {
     marginLeft: "1em",
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getTitle = (title, classes) => {
+function Title({ title, classes }) {
   return (
     <Grid item xs={12}>
       <Typography className={classes.title} variant="h6">
@@ -41,9 +42,9 @@ const getTitle = (title, classes) => {
       </Typography>
     </Grid>
   );
-};
+}
 
-const getSubtitle = (subtitle, classes) => {
+function Subtitle({ subtitle, classes }) {
   return subtitle ? (
     <Grid item xs={12}>
       <p className={classes.subtitle} variant="h6">
@@ -53,27 +54,36 @@ const getSubtitle = (subtitle, classes) => {
   ) : (
     <></>
   );
-};
+}
 
-const getAuthor = (author, classes) => {
-  return (
+function Authors({ authors, classes }) {
+  return authors ? (
     <Grid item xs={12}>
       <p className={classes.author} variant="h6">
-        Written By {author.join(", ")}
+        Written By {authors.join(", ")}
       </p>
     </Grid>
+  ) : (
+    <></>
   );
-};
+}
 
-function ResultCard(title, subtitle, authors, description, thumbnail, link) {
+function ResultCard({
+  title,
+  subtitle,
+  authors,
+  description,
+  thumbnail,
+  link,
+}) {
   const classes = useStyles();
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm container>
-          {getTitle(title, classes)}
-          {getSubtitle(subtitle, classes)}
-          {getAuthor(authors, classes)}
+          <Title title={title} classes={classes}></Title>
+          <Subtitle subtitle={subtitle} classes={classes}></Subtitle>
+          <Authors authors={authors} classes={classes}></Authors>
         </Grid>
         <Grid
           item

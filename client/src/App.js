@@ -19,7 +19,6 @@ function App() {
     const newSearch = searchInput.current.value;
     setLastSearch(newSearch);
     API.getBooks(newSearch).then(({ data }) => {
-      console.log(data);
       setBooks(data.items);
     });
   };
