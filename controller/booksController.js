@@ -1,8 +1,12 @@
 const db = require("../models");
 
 module.exports = {
+
   create: (req, res) => {
-    db.Book.create(req.body)
+
+    var update = { expire: new Date() },
+      options = { upsert: true, new: true, setDefaultsOnInsert: true };
+    db.Book.findOneAndUpdate(req.body, update, options)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

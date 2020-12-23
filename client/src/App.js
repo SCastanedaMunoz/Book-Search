@@ -29,9 +29,9 @@ function App() {
     const volumeInfo = targetBook.volumeInfo;
 
     const title = volumeInfo.title;
-    const subtitle = volumeInfo.title;
-    const authors = volumeInfo.title;
-    const description = volumeInfo.title;
+    const subtitle = volumeInfo.subtitle;
+    const authors = volumeInfo.authors;
+    const description = volumeInfo.description;
     const image = volumeInfo.imageLinks
       ? volumeInfo.imageLinks.thumbnail
       : "https://via.placeholder.com/128x197?text=Image+Not+Found";
@@ -51,7 +51,7 @@ function App() {
     <Router>
       <Nav />
       <Switch>
-        <Route exact path={["/", "/books"]}>
+        <Route exact path="/">
           <Header />
           <Books
             searchRef={searchInput}
