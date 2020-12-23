@@ -34,40 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Title({ title, classes }) {
-  return (
-    <Grid item xs={12}>
-      <Typography className={classes.title} variant="h6">
-        {title}
-      </Typography>
-    </Grid>
-  );
-}
-
-function Subtitle({ subtitle, classes }) {
-  return subtitle ? (
-    <Grid item xs={12}>
-      <p className={classes.subtitle} variant="h6">
-        {subtitle}
-      </p>
-    </Grid>
-  ) : (
-    <></>
-  );
-}
-
-function Authors({ authors, classes }) {
-  return authors ? (
-    <Grid item xs={12}>
-      <p className={classes.author} variant="h6">
-        Written By {authors.join(", ")}
-      </p>
-    </Grid>
-  ) : (
-    <></>
-  );
-}
-
 function ResultCard({
   title,
   subtitle,
@@ -77,13 +43,48 @@ function ResultCard({
   link,
 }) {
   const classes = useStyles();
+
+  const Title = () => {
+    return (
+      <Grid item xs={12}>
+        <Typography className={classes.title} variant="h6">
+          {title}
+        </Typography>
+      </Grid>
+    );
+  };
+
+  const Subtitle = () => {
+    return subtitle ? (
+      <Grid item xs={12}>
+        <p className={classes.subtitle} variant="h6">
+          {subtitle}
+        </p>
+      </Grid>
+    ) : (
+      <></>
+    );
+  };
+
+  const Authors = () => {
+    return authors ? (
+      <Grid item xs={12}>
+        <p className={classes.author} variant="h6">
+          Written By {authors.join(", ")}
+        </p>
+      </Grid>
+    ) : (
+      <></>
+    );
+  };
+
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm container>
           <Title title={title} classes={classes}></Title>
           <Subtitle subtitle={subtitle} classes={classes}></Subtitle>
-          <Authors authors={authors} classes={classes}></Authors>
+          <Authors></Authors>
         </Grid>
         <Grid
           item

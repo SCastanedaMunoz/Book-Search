@@ -89,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Books({ searchRef, onSearch, books }) {
   const classes = useStyles();
-
   const searchBar = () => {
     return (
       <Paper className={classes.paper}>
@@ -146,7 +145,7 @@ function Books({ searchRef, onSearch, books }) {
     return (
       <Paper className={classes.resultPaper}>
         <Typography className={classes.noResultsHeader} variant="h4">
-          No Results Were Found!
+          No Results Yet! Try Searching...
         </Typography>
       </Paper>
     );
@@ -157,6 +156,7 @@ function Books({ searchRef, onSearch, books }) {
       <Paper className={classes.resultPaperFilled}>
         {books.map((book) => {
           const volumeInfo = book.volumeInfo;
+          console.log(volumeInfo);
           const image = volumeInfo.imageLinks
             ? volumeInfo.imageLinks.thumbnail
             : "https://via.placeholder.com/128x197?text=Image+Not+Found";
