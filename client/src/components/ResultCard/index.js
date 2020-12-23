@@ -43,6 +43,7 @@ function ResultCard({
   thumbnail,
   link,
   onAction,
+  saved
 }) {
   const classes = useStyles();
 
@@ -64,8 +65,8 @@ function ResultCard({
         </p>
       </Grid>
     ) : (
-      <></>
-    );
+        <></>
+      );
   };
 
   const Authors = () => {
@@ -76,8 +77,8 @@ function ResultCard({
         </p>
       </Grid>
     ) : (
-      <></>
-    );
+        <></>
+      );
   };
 
   return (
@@ -109,7 +110,7 @@ function ResultCard({
             className={classes.button}
             variant="contained"
           >
-            Save
+            {saved? "Delete" : "Save"}
           </Button>
         </Grid>
       </Grid>

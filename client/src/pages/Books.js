@@ -5,6 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import BookCard from "../components/ResultCard";
+import API from "../util/API";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -71,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 1),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -87,8 +87,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Books({ searchRef, onSearch, onSave, books }) {
+function Books({ searchRef, onSearch, books }) {
   const classes = useStyles();
+
+  const onSaveBook = (id) => {
+    const targetBook = books.find((book) => book.id === id);
+    const volumeInfo = targetBook.volumeInfo;
+    const title = volumeInfo.title;
+    const subtitle = volumeInfo.subtitle;
+    const authors = volumeInfo.authors;
+    const description = volumeInfo.description;
+    const image = volumeInfo.imageLinks
+      ? volumeInfo.imageLinks.thumbnail
+      : "https://via.placeholder.com/128x197?text=Image+Not+Found";
+    const link = volumeInfo.previewLink;
+
+    API.saveBook({
+      title: title,
+      subtitle: subtitle,
+      authors: authors,
+      description: description,
+      image: image,
+      link: link
+    })
+  };
+
   const searchBar = () => {
     return (
       <Paper className={classes.paper}>
@@ -116,7 +139,6 @@ function Books({ searchRef, onSearch, onSave, books }) {
             onClick={onSearch}
             justify="space-between"
             variant="contained"
-            color="primary"
             className={classes.searchButton}
           >
             Search
@@ -131,9 +153,7 @@ function Books({ searchRef, onSearch, onSave, books }) {
     const selection = hasResults ? renderResults() : renderNoResults();
     return (
       <Paper className={classes.paper}>
-        <Typography className={classes.header} variant="h6">
-          Results
-        </Typography>
+
         {selection}
       </Paper>
     );
@@ -152,6 +172,9 @@ function Books({ searchRef, onSearch, onSave, books }) {
   const renderResults = () => {
     return (
       <Paper className={classes.resultPaperFilled}>
+        <Typography className={classes.header} variant="h6">
+          Results
+        </Typography>
         {books.map((book) => {
           const volumeInfo = book.volumeInfo;
           const image = volumeInfo.imageLinks
@@ -167,7 +190,7 @@ function Books({ searchRef, onSearch, onSave, books }) {
               description={volumeInfo.description}
               thumbnail={image}
               link={volumeInfo.previewLink}
-              onAction={onSave}
+              onAction={onSaveBook}
             ></BookCard>
           );
         })}
